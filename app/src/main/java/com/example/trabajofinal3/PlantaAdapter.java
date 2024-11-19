@@ -33,11 +33,14 @@ public class PlantaAdapter extends RecyclerView.Adapter<PlantaAdapter.PlantaView
         Planta planta = listaPlantas.get(position);
         holder.nombre.setText(planta.getNombre());
         // Mostrar los días restantes para el riego
-        long diasRestantes = planta.getDiasParaRiego();
+        long diasRestantes = planta.getDiasParaRiego()+1; //El +1 hace que coja bien los dias.
         if(diasRestantes == 0) {
-            holder.tiempoRiego.setText("Regar hoy");
+            holder.tiempoRiego.setText("Regar hoy.");
+        }
+        else if(diasRestantes == 1){
+            holder.tiempoRiego.setText("Regar mañana.");
         }else{
-            holder.tiempoRiego.setText("Días para riego: " + diasRestantes);
+            holder.tiempoRiego.setText("Regar en " + diasRestantes + " días.");
         }
         holder.deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
