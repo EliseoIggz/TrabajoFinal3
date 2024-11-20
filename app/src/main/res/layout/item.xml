@@ -18,7 +18,7 @@
             android:id="@+id/planta_foto"
             android:layout_width="64dp"
             android:layout_height="64dp"
-            card_view:srcCompat="@drawable/captura_de_pantalla_2024_11_19_164554" />
+            card_view:srcCompat="@drawable/iconoplanta" />
 
         <LinearLayout
             android:layout_width="238dp"
@@ -30,7 +30,7 @@
                 android:id="@+id/planta_nombre"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Nombre"
+                android:text="@string/nombreItem"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -38,7 +38,7 @@
                 android:id="@+id/planta_tiempoRiego"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Apellidos"
+                android:text="@string/diasRiego"
                 android:textSize="16sp" />
 
         </LinearLayout>

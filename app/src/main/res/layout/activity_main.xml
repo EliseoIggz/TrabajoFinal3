@@ -25,20 +25,21 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="409dp"
+        android:layout_height="143dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/captura_de_pantalla_2024_11_19_162816" />
+        app:srcCompat="@drawable/bannerplanta" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:gravity="center_horizontal"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -47,33 +48,38 @@
         <ImageView
             android:id="@+id/imageView2"
             android:layout_width="48dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
             android:layout_weight="1"
-            app:srcCompat="@drawable/captura_de_pantalla_2024_11_19_163433" />
+            app:srcCompat="@drawable/imgplantas" />
 
         <TextView
             android:id="@+id/textView2"
-            android:layout_width="140dp"
-            android:layout_height="66dp"
-            android:padding="16dp"
-            android:text="Mis Plantas"
-            android:textAlignment="viewStart"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="bottom"
+            android:paddingBottom="5dp"
+            android:text="@string/varPlantas"
             android:textColor="#5D4037"
-            android:textSize="20sp" />
+            android:textSize="30sp" />
 
         <TextView
             android:id="@+id/textView"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="Recordatorio" />
+            android:gravity="top"
+            android:paddingTop="25dp"
+            android:text="@string/recordatorio"
+            android:textAlignment="center"
+            android:textSize="16sp" />
 
         <Switch
             android:id="@+id/switchNotif"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="43dp"
+            android:layout_height="81dp"
             android:layout_weight="1"
-            android:paddingRight="20dp" />
+            android:gravity="top" />
     </LinearLayout>
 
     <Button
@@ -82,7 +88,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
-        android:text="+ Añadir planta"
+        android:text="@string/addPlanta"
         app:cornerRadius="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
