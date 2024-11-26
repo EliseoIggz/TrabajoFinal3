@@ -1,6 +1,7 @@
 package com.example.trabajofinal3;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -69,10 +70,10 @@ public class MainActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     // Switch activado
-                    Toast.makeText(MainActivity.this, "Notificaciones activadas", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, getString(R.string.notificaciones_activadas), Toast.LENGTH_SHORT).show();
                 } else {
                     // Switch desactivado
-                    Toast.makeText(MainActivity.this, "Notificaciones desactivadas", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, getString(R.string.notificaciones_desactivadas), Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -98,12 +99,16 @@ public class MainActivity extends AppCompatActivity {
         btnConfirmar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String nombre = etNombre.getText().toString().trim();
-                String tiempoRiegoStr = etTiempoRiego.getText().toString().trim();
+                String nombre = etNombre.getText().toString();
+                String tiempoRiegoStr = etTiempoRiego.getText().toString();
 
                 if (nombre.isEmpty() || tiempoRiegoStr.isEmpty()) {
                     Toast.makeText(MainActivity.this, "Por favor, llena todos los campos", Toast.LENGTH_SHORT).show();
-                } else {
+                    Log.e("ERROR","El nombre y/o el tiempo de riego estan vacíos");
+                } else if (tiempoRiegoStr.matches(".*\\d.*")){
+                    Toast.makeText(MainActivity.this, "El tiempo solo puede contener números", Toast.LENGTH_SHORT).show();
+                    Log.e("ERROR","El tiempod e riego contiene simbolos o letras");
+                }else {
                     int tiempoRiego = Integer.parseInt(tiempoRiegoStr);
 
                     // Crear y agregar la nueva planta
