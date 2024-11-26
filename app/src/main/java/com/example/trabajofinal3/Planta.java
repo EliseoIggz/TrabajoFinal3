@@ -47,6 +47,12 @@ public class Planta {
         long diferenciaMilisegundos = fechaProximoRiego.getTimeInMillis() - fechaActual.getTimeInMillis();
         // Convertir la diferencia de milisegundos a días
         long diferenciaDias = diferenciaMilisegundos / (24 * 60 * 60 * 1000); // Convertir milisegundos a días
+        // Comprobar si los dias que faltan para regar son menor a 0 para poner una nueva fecha de riego
+        if(diferenciaDias < 0){ //
+            setFechaRegistro(Calendar.getInstance());
+            diferenciaDias = getDiasParaRiego();
+            diferenciaDias -= 1;
+        }
         return diferenciaDias;
     }
 }
