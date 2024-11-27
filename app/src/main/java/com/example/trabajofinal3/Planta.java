@@ -51,8 +51,9 @@ public class Planta {
         if(diferenciaDias < 0){ //
             setFechaRegistro(Calendar.getInstance());
             diferenciaDias = getDiasParaRiego();
-            diferenciaDias -= 1;
+            diferenciaDias -= 1; // Se resta 1 para que no coincida el mensaje del dia de riego "Regar hoy" con el de "Regar en x dias"
+                                    // porque el dia que riegas ya cuenta como el primer dia hasta el proximo riego
         }
-        return diferenciaDias;
+        return diferenciaDias;  //Valor que se usa para enseñar en el mensaje
     }
 }

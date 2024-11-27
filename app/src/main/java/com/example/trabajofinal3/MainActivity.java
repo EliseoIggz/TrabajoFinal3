@@ -40,17 +40,19 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
+
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
 
         listaPlantas = new ArrayList<>();
-        //listaPlantas.add(new Planta("Ficus",3));
+        //Ejemplo para empezar con una planta la App
         listaPlantas.add(new Planta("Rosa",10));
 
+        // Instanciar y setear un adaptador para integrar la vista del item como base de la lista del recyclerView
         plantaAdapter = new PlantaAdapter(listaPlantas);
         recyclerView.setAdapter(plantaAdapter);
-
+        // Localizamos el boton de añadir plantas
         addButton = findViewById(R.id.addButton);
 
         // Configurar el evento de clic del botón agregar
@@ -85,10 +87,7 @@ public class MainActivity extends AppCompatActivity {
         View dialogView = inflater.inflate(R.layout.dialog_add_planta, null);
 
         // Crear el cuadro de diálogo
-        AlertDialog dialog = new AlertDialog.Builder(this)
-                .setView(dialogView)
-                .setCancelable(true)
-                .create();
+        AlertDialog dialog = new AlertDialog.Builder(this).setView(dialogView).setCancelable(true).create();
 
         // Referenciar los campos y el botón del diálogo
         EditText etNombre = dialogView.findViewById(R.id.et_nombre);
@@ -107,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
                     Log.e("ERROR","El nombre y/o el tiempo de riego estan vacíos");
                 } else if (tiempoRiegoStr.matches(".*\\d.*")){
                     Toast.makeText(MainActivity.this, "El tiempo solo puede contener números", Toast.LENGTH_SHORT).show();
-                    Log.e("ERROR","El tiempod e riego contiene simbolos o letras");
+                    Log.e("ERROR","El tiempo de riego contiene símbolos o letras");
                 }else {
                     int tiempoRiego = Integer.parseInt(tiempoRiegoStr);
 
@@ -118,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
                     // Ordenar el ArrayList según el tiempo de riego
                     ordenarPlantasPorTiempoRiego();
 
-                    // Asegúrate de notificar al adaptador después de actualizar la lista
+                    // Notificar al adaptador después de actualizar la lista
                     plantaAdapter.notifyDataSetChanged();
 
                     // Scroll al inicio si es necesario
@@ -133,6 +132,7 @@ public class MainActivity extends AppCompatActivity {
         dialog.show();
     }
 
+    // Ordena los elementos de la lista por el tiempo de riego
     private void ordenarPlantasPorTiempoRiego() {
         Collections.sort(listaPlantas, new java.util.Comparator<Planta>() {
             @Override
