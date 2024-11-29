@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
         listaPlantas.add(new Planta("Rosa",10));
 
         // Instanciar y setear un adaptador para integrar la vista del item como base de la lista del recyclerView
-        plantaAdapter = new PlantaAdapter(listaPlantas);
+        plantaAdapter = new PlantaAdapter(listaPlantas, this); // Pasamos el contexto actual que usaremos en el toast de borrar planta
         recyclerView.setAdapter(plantaAdapter);
         // Localizamos el boton de añadir plantas
         addButton = findViewById(R.id.addButton);

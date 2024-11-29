@@ -1,11 +1,13 @@
 package com.example.trabajofinal3;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,9 +17,11 @@ import java.util.ArrayList;
 public class PlantaAdapter extends RecyclerView.Adapter<PlantaAdapter.PlantaViewHolder> {
 
     private ArrayList<Planta> listaPlantas;
+    private Context context;
 
-    public PlantaAdapter(ArrayList<Planta> listaPlantas) {
+    public PlantaAdapter(ArrayList<Planta> listaPlantas, Context context) {
         this.listaPlantas = listaPlantas;
+        this.context = context; // Pasamos el contexto para poder referenciarlo en el toast al borrar la planta
     }
 
     @NonNull
@@ -53,6 +57,7 @@ public class PlantaAdapter extends RecyclerView.Adapter<PlantaAdapter.PlantaView
                     notifyItemRemoved(pos);
                     notifyItemRangeChanged(pos, listaPlantas.size());
                 }
+                Toast.makeText(context, context.getString(R.string.planta_borrada), Toast.LENGTH_SHORT).show();
             }
         });
     }

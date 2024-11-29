@@ -7,4 +7,6 @@
     <string name="diasRiego" />
     <string name="notificaciones_desactivadas">Notificaciones desactivadas</string>
     <string name="notificaciones_activadas">Notificaciones activadas</string>
+    <string name="planta_borrada">Planta borrada</string>
+
 </resources>

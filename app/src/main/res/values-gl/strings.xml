@@ -7,4 +7,5 @@
     <string name="nombreItem">Nome</string>
     <string name="notificaciones_desactivadas">"Notificacións desactivadas "</string>
     <string name="notificaciones_activadas">"Notificacións activadas "</string>
+    <string name="planta_borrada">Planta borrada</string>
 </resources>
