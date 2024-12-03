@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/itemAmarillo"
+        android:title="Cambiar a amarillo" />
+    <item
+        android:id="@+id/itemVioleta"
+        android:title="Cambiar a violeta" />
+</menu>

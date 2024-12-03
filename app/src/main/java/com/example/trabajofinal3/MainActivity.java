@@ -1,7 +1,10 @@
 package com.example.trabajofinal3;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
@@ -18,9 +21,14 @@ import java.util.Collections;
 import android.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.widget.EditText;
+import android.widget.PopupMenu;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.CompoundButton;
+
+import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.tabs.TabLayout;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -40,6 +48,33 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
+        // Configuración del TabLayout
+        TabLayout tabLayout = findViewById(R.id.tabLayout);
+        // Añadir pestañas
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                // Acción al seleccionar una pestaña
+                if (tab.getPosition() == 1) {
+                    Toast.makeText(getApplicationContext(), "PROXIMAMENTE", Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(getApplicationContext(), "Tab seleccionada: " + tab.getText(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+                // Acción al deseleccionar una pestaña
+                // Comentado para que no se repita al seleccioanr otra y salgan 2 toast
+                //Toast.makeText(getApplicationContext(), "Tab deseleccionada", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+                // Acción al volver a seleccionar una pestaña
+                Toast.makeText(getApplicationContext(), "Tab reseleccionada", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -72,14 +107,92 @@ public class MainActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     // Switch activado
-                    Toast.makeText(MainActivity.this, getString(R.string.notificaciones_activadas), Toast.LENGTH_SHORT).show();
+                    Snackbar snackbar = Snackbar.make(findViewById(R.id.main), getString(R.string.notificaciones_activadas), Snackbar.LENGTH_LONG);
+                    snackbar.setAction("Deshacer", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            // Acción al hacer clic en "Deshacer"
+                            Toast.makeText(getApplicationContext(), "Acción deshecha", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    snackbar.addCallback(new Snackbar.Callback() {
+                        @Override
+                        public void onShown(Snackbar sb) {
+                            // Acción al mostrar la Snackbar
+                            System.out.println("Snackbar mostrada");
+                        }
+
+                        @Override
+                        public void onDismissed(Snackbar transientBottomBar, int event) {
+                            // Acción al cerrar la Snackbar
+                            System.out.println("Snackbar cerrada");
+                        }
+                    });
+                    snackbar.show();
                 } else {
                     // Switch desactivado
-                    Toast.makeText(MainActivity.this, getString(R.string.notificaciones_desactivadas), Toast.LENGTH_SHORT).show();
+                    Snackbar snackbar = Snackbar.make(findViewById(R.id.main), getString(R.string.notificaciones_desactivadas), Snackbar.LENGTH_LONG);
+                    snackbar.setAction("Deshacer", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            // Acción al hacer clic en "Deshacer"
+                            Toast.makeText(getApplicationContext(), "Acción deshecha", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    snackbar.addCallback(new Snackbar.Callback() {
+                        @Override
+                        public void onShown(Snackbar sb) {
+                            // Acción al mostrar la Snackbar
+                            System.out.println("Snackbar mostrada");
+                        }
+
+                        @Override
+                        public void onDismissed(Snackbar transientBottomBar, int event) {
+                            // Acción al cerrar la Snackbar
+                            System.out.println("Snackbar cerrada");
+
+                        }
+                    });
+                    snackbar.show();
                 }
             }
         });
+
+        TextView plantas = findViewById(R.id.textView2);
+        plantas.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showPopUpMenu(v);
+            }
+        });
+
     }
+
+    // Método para asociar un menú emergente popup al pulsar el textView
+    public void showPopUpMenu(View view) {
+        PopupMenu popupMenu = new PopupMenu(this, view);
+        MenuInflater menuInflater = popupMenu.getMenuInflater();
+        menuInflater.inflate(R.menu.menu, popupMenu.getMenu());
+        // Manejador de clicks
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                TextView tv;
+                if (item.getItemId() == R.id.itemAmarillo) {
+                    tv = (TextView) view;
+                    tv.setTextColor(Color.YELLOW);
+                }
+                if (item.getItemId() == R.id.itemVioleta) {
+                    tv = (TextView) view;
+                    tv.setTextColor(Color.MAGENTA);
+                }
+                return true;
+            }
+        });
+        // mostrarlo
+        popupMenu.show();
+    }
+
 
     private void mostrarDialogoAgregarPlanta() {
         // Inflar el layout del diálogo
