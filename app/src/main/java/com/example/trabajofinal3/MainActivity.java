@@ -221,7 +221,7 @@ public class MainActivity extends AppCompatActivity {
                 if (nombre.isEmpty() || tiempoRiegoStr.isEmpty()) {
                     Toast.makeText(MainActivity.this, "Por favor, llena todos los campos", Toast.LENGTH_SHORT).show();
                     Log.e("ERROR","El nombre y/o el tiempo de riego estan vacíos");
-                } else if (tiempoRiegoStr.matches(".*\\d.*")){
+                } else if (!tiempoRiegoStr.matches(".*\\d.*")){
                     Toast.makeText(MainActivity.this, "El tiempo solo puede contener números", Toast.LENGTH_SHORT).show();
                     Log.e("ERROR","El tiempo de riego contiene símbolos o letras");
                 }else {
