@@ -1,5 +1,6 @@
 package com.example.trabajofinal3;
 
+import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -47,6 +48,9 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        // Establecer orientación según el sensor del dispositivo
+        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR);
 
         // Configuración del TabLayout
         TabLayout tabLayout = findViewById(R.id.tabLayout);
