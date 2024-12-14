@@ -24,9 +24,7 @@ import android.widget.CompoundButton;
 
 public class MainActivity extends AppCompatActivity {
 
-    private RecyclerView recyclerView;
-    private PlantaAdapter plantaAdapter;
-    private ArrayList<Planta> listaPlantas;
+    private RVFragment rvFragment;
     private Button addButton;
 
     @Override
@@ -39,43 +37,25 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        
-        recyclerView = findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setHasFixedSize(true);
 
-        listaPlantas = new ArrayList<>();
-        //Ejemplo para empezar con una planta la App
-        listaPlantas.add(new Planta("Rosa",10));
+        // Inicializar el Fragment
+        rvFragment = new RVFragment();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, rvFragment) // Asegúrate de tener un contenedor con este ID en tu layout
+                .commit();
 
-        // Instanciar y setear un adaptador para integrar la vista del item como base de la lista del recyclerView
-        plantaAdapter = new PlantaAdapter(listaPlantas, this); // Pasamos el contexto actual que usaremos en el toast de borrar planta
-        recyclerView.setAdapter(plantaAdapter);
-        // Localizamos el boton de añadir plantas
+        // Configurar botón para agregar plantas
         addButton = findViewById(R.id.addButton);
+        addButton.setOnClickListener(v -> mostrarDialogoAgregarPlanta());
 
-        // Configurar el evento de clic del botón agregar
-        addButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mostrarDialogoAgregarPlanta();
-            }
-        });
-
-        // Localizar el Switch
+        // Configurar switch
         Switch switchNotificaciones = findViewById(R.id.switchNotif);
-
-        // Configurar el evento OnCheckedChangeListener
-        switchNotificaciones.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    // Switch activado
-                    Toast.makeText(MainActivity.this, getString(R.string.notificaciones_activadas), Toast.LENGTH_SHORT).show();
-                } else {
-                    // Switch desactivado
-                    Toast.makeText(MainActivity.this, getString(R.string.notificaciones_desactivadas), Toast.LENGTH_SHORT).show();
-                }
+        switchNotificaciones.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                Toast.makeText(this, getString(R.string.notificaciones_activadas), Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, getString(R.string.notificaciones_desactivadas), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -108,20 +88,7 @@ public class MainActivity extends AppCompatActivity {
                     Log.e("ERROR","El tiempo de riego contiene símbolos o letras");
                 }else {
                     int tiempoRiego = Integer.parseInt(tiempoRiegoStr);
-
-                    // Crear y agregar la nueva planta
-                    Planta nuevaPlanta = new Planta(nombre, tiempoRiego);
-                    listaPlantas.add(nuevaPlanta);
-
-                    // Ordenar el ArrayList según el tiempo de riego
-                    ordenarPlantasPorTiempoRiego();
-
-                    // Notificar al adaptador después de actualizar la lista
-                    plantaAdapter.notifyDataSetChanged();
-
-                    // Scroll al inicio si es necesario
-                    recyclerView.scrollToPosition(0);
-
+                    agregarPlantaAlFragment(nombre, tiempoRiego);
                     // Cerrar el cuadro de diálogo
                     dialog.dismiss();
                 }
@@ -131,13 +98,9 @@ public class MainActivity extends AppCompatActivity {
         dialog.show();
     }
 
-    // Ordena los elementos de la lista por el tiempo de riego
-    private void ordenarPlantasPorTiempoRiego() {
-        Collections.sort(listaPlantas, new java.util.Comparator<Planta>() {
-            @Override
-            public int compare(Planta p1, Planta p2) {
-                return Integer.compare(p1.getTiempoRiego(), p2.getTiempoRiego());
-            }
-        });
+    private void agregarPlantaAlFragment(String nombre, int tiempoRiego) {
+        if (rvFragment != null) {
+            rvFragment.agregarPlanta(nombre, tiempoRiego);
+        }
     }
 }
