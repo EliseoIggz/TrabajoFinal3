@@ -2,10 +2,12 @@ package com.example.trabajofinal3;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -22,10 +24,14 @@ import android.widget.Switch;
 import android.widget.Toast;
 import android.widget.CompoundButton;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
+
 public class MainActivity extends AppCompatActivity {
 
     private RVFragment rvFragment;
     private Button addButton;
+    private extraFragment extraFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,8 +44,37 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-        // Inicializar el Fragment
+        // Inicializar los Fragment
         rvFragment = new RVFragment();
+        extraFragment = new extraFragment();
+
+        // Localizamos el menú de navegación
+        BottomNavigationView bnv = findViewById(R.id.menuNav);
+
+        // Configuramos el listener que responda al boton del menu que sea pulsado para que enseñe un fragment u otro
+        bnv.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                if(item.getItemId()== R.id.opc1){
+                    getSupportFragmentManager()
+                            .beginTransaction()
+                            .setReorderingAllowed(true)
+                            .replace(R.id.fragment_container, RVFragment.class, null)
+                            .commit();
+                    return true;
+                }else if(item.getItemId()==R.id.opc2){
+                    getSupportFragmentManager()
+                            .beginTransaction()
+                            .setReorderingAllowed(true)
+                            .replace(R.id.fragment_container, extraFragment.class, null)
+                            .commit();
+                    return true;
+                }else {
+                    return false;
+                }
+            }
+        });
+
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fragment_container, rvFragment) // Asegúrate de tener un contenedor con este ID en tu layout
